@@ -39,16 +39,18 @@ const getRandNum = (max) => Math.floor(Math.random() * max);
 
 // function to get random quote
 const getRandomQuote = () => {
-  // get random number
+  let quotesLength = quotes.length;
+  let quotesGivenLength = quotesGiven.length;
+  let quotesGivenLastItem = quotesGiven[quotesGivenLength - 1];
   let randNum = getRandNum(quotes.length);
-  // when all quotes havent been cycled through and current quote hasnt been displayed
-  // push index of quote displayed and then return quote to display
-  if ( quotesGiven.length !== quotes.length && quotesGiven.indexOf(randNum) === -1) { 
+  // clear quotesGiven when all items have been cycled through and new quote isnt the same as last quote shown
+  if ( quotesGivenLength === quotesLength && quotesGivenLastItem !== randNum ) { quotesGiven = []; } 
+  // when current quote hasnt been displayed, push index of quote displayed and then return quote to display
+  if ( quotesGiven.indexOf(randNum) === -1 ) { 
     quotesGiven.push(randNum);
     return quotes[randNum]; 
   }
-  // when through all the quotes, set quotesGiven array equal to index of current quote, recursive call to get new quote
-  quotesGiven = [randNum];  
+  // recursive call to getRandomQuote() when above conditions dont return anything
   return getRandomQuote();
 };
 
@@ -75,7 +77,7 @@ const printQuote = () => {
   // insert quote into quotebox
   quoteBox.innerHTML = string;
   // run printQuote after 4 seconds
-  timer = setInterval(printQuote, 4000);
+  // timer = setInterval(printQuote, 4000);
 };
 
 
