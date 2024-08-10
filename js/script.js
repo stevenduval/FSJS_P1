@@ -1,3 +1,10 @@
+// global var to initialize timer
+let timer;
+
+// array to store which quotes have been seen
+let quotesGiven = [];
+
+// quote array of objects
 const quotes = [
   {
     quote: 'If you want to know what a man\'s like, take a good look at how he treats his inferiors, not his equals.',
@@ -31,21 +38,37 @@ const quotes = [
 const getRandNum = (max) => Math.floor(Math.random() * max);
 
 // function to get random quote
-const getRandomQuote = () => quotes[getRandNum(quotes.length)];
+const getRandomQuote = () => {
+  // get random number
+  let randNum = getRandNum(quotes.length);
+  // when quote hasn't been displayed recently and not all quotes have been cycled through
+  // push index of quote displayed and then return quote to display
+  if ( quotesGiven.length !== quotes.length && quotesGiven.indexOf(randNum) === -1) { 
+    quotesGiven.push(randNum);
+    return quotes[randNum]; 
+  }
+  // when through all the quotes, 
+  // empty quotesGiven array, push index of current quote, recursive call to get new quote
+  quotesGiven = [];  
+  quotesGiven.push(randNum);
+  return getRandomQuote();
+};
 
 // function to return random rgb value
 const getRGB = () => `rgb(${getRandNum(255)}, ${getRandNum(255)}, ${getRandNum(255)})`;
 
-
 const printQuote = () => {
+  // clear interval
+  clearInterval(timer);
   // get element to insert quotes into and get random quote
   const quoteBox = document.querySelector('#quote-box');
   let quote = getRandomQuote();
+  console.log(quote);
   // string to insert into quote box
   let string = `
     <p class="quote">${quote.quote}</p>
     <p class="source">${quote.source}
-      ${ ((quote.citation) ? `<span class="citation">${quote.citation}</span>`: '' ) }
+      ${ ((quote.citation) ? `<span class="citation">${quote.citation}</span>`: '') }
       ${ ((quote.year) ? `<span class="year">${quote.year} </span>`: '') }
     </p>
   `;
@@ -54,7 +77,7 @@ const printQuote = () => {
   // insert quote into quotebox
   quoteBox.innerHTML = string;
   // run printQuote after 4 seconds
-  setTimeout(printQuote, 4000)
+  timer = setInterval(printQuote, 4000);
 };
 
 
