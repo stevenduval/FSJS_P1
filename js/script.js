@@ -41,16 +41,14 @@ const getRandNum = (max) => Math.floor(Math.random() * max);
 const getRandomQuote = () => {
   // get random number
   let randNum = getRandNum(quotes.length);
-  // when quote hasn't been displayed recently and not all quotes have been cycled through
+  // when all quotes havent been cycled through and current quote hasnt been displayed
   // push index of quote displayed and then return quote to display
   if ( quotesGiven.length !== quotes.length && quotesGiven.indexOf(randNum) === -1) { 
     quotesGiven.push(randNum);
     return quotes[randNum]; 
   }
-  // when through all the quotes, 
-  // empty quotesGiven array, push index of current quote, recursive call to get new quote
-  quotesGiven = [];  
-  quotesGiven.push(randNum);
+  // when through all the quotes, set quotesGiven array equal to index of current quote, recursive call to get new quote
+  quotesGiven = [randNum];  
   return getRandomQuote();
 };
 
