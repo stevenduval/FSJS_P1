@@ -1,7 +1,7 @@
 // global var to initialize timer
 let timer;
 
-// array to store which quotes have been seen
+// global var for array to store index which quotes have been seen
 let quotesGiven = [];
 
 // quote array of objects
@@ -43,7 +43,7 @@ const getRandomQuote = () => {
   let quotesGivenLength = quotesGiven.length;
   let quotesGivenLastItem = quotesGiven[quotesGivenLength - 1];
   let randNum = getRandNum(quotes.length);
-  // clear quotesGiven when all items have been cycled through and new quote isnt the same as last quote shown
+  // clear quotesGiven array when all items have been cycled through and new quote isnt the same as last quote shown
   if ( quotesGivenLength === quotesLength && quotesGivenLastItem !== randNum ) { quotesGiven = []; } 
   // when current quote hasnt been displayed, push index of quote displayed and then return quote to display
   if ( quotesGiven.indexOf(randNum) === -1 ) { 
