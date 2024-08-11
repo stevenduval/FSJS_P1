@@ -77,7 +77,7 @@ const printQuote = () => {
   // insert quote into quotebox
   quoteBox.innerHTML = string;
   // run printQuote after 4 seconds
-  // timer = setInterval(printQuote, 4000);
+  timer = setInterval(printQuote, 4000);
 };
 
 
